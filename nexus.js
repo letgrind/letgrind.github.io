@@ -58,11 +58,7 @@ if (Number(localStorage.expiry) !== Math.floor(Date.now() / 1000000)) {
   localStorage.expiry = Math.floor(Date.now() / 1000000)
 }
 
-function sleep(ms) {
-  return new Promise(resolveFunc => setTimeout(resolveFunc, ms));
-}
-
-async function loadServer (id) {
+function loadServer (id) {
   const req = new XMLHttpRequest()
   const cache = localStorage[id]
   if (cache) {
@@ -101,7 +97,6 @@ async function loadServer (id) {
     // "https://jsonp.afeld.me/?url="+
     'https://discord.com/api/v6/invites/' + id + '?with_counts=true', true
   )
-  await sleep(2000)
   req.send(null)
 }
 
@@ -215,7 +210,7 @@ window.onload = function () {
   for (let id in servers) {
     setTimeout(
       loadServer,
-      i++ * Math.random() * 100,
+      i++ * Math.random() * 1000,
       id
     )
   }
