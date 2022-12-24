@@ -1,7 +1,6 @@
 const servers = {
   'cERWpJ6Xbd': { type: ['General'], notes: '' }, // yume nikki battle royale
   '2UmCeFsGvd': { type: ['Dev'], notes: "YNOProject's exclusive fangame development server." }, // yume nikki battle royale #2
-  'zKcTwtwACX': { type: ['General'], notes: 'The Official Chapel of the Monochrome Sisters.' }, // hujle's mental asylum, monoe
   'JzuTbJe': { type: ['General'], notes: '', warn: 1 }, // Uboachan
   'Rv5P4KR': { type: ['General'], notes: '', warn: 1 }, // Yume Nikki Fan Discord (cool logo)
   'AE6NVrj': { type: ['General'], notes: '' }, // Yume Nikki (two rainbows server)
@@ -30,7 +29,6 @@ const servers = {
   'aQPeUSB': { type: ['Dev'], notes: 'Dream Diary Development chat, the ' + 'chat for making Yume Nikki fangames, ' +'general games, and hanging out!' }, // Dream Diary Development
   'DyWQQxN': { type: ['Dev'], notes: 'A server dedicated to the Dream Diary Jam 3.' }, // Dream Diary Jam 3
   'vzXT9ds': { type: ['Dev'], notes: 'A server dedicated to the Dream Diary Jam 4.' }, // Dream Diary Jam 4
-  'R7yK9V3tp3': { type: ['Dev'], notes: 'A server dedicated to the annual Dream Diary Jam.' }, // Dream Diary Jam 6
   'uajshx6fMJ': { type: ['Dev'], notes: 'Note Dream development server.' }, // Note Dream
   'vngGwD6': { type: ['Dev'], notes: 'Uneven Dream development server.' }, // Uneven Dream
   'KjtGdWY': { type: ['General'], notes: 'A server dedicated to Yume Nikki Speedrunning.' }, // Speedrunning in the 90s
@@ -39,14 +37,12 @@ const servers = {
   'AQMVFDh': { type: ['LSD: Dream Emulator'], notes: '' }, // DreamEmulator
   'sDfZX5f': { type: ['LSD: Dream Emulator'], notes: '' }, // Emulated Dreams
   '3SBFGGJ': { type: ['LSD: Dream Emulator'], notes: '' } // LSD: Dream Emulator Community
-  // 'tGCZtRj': { type: ['General'], notes: '', warn: 1 }, // masada spaceship (no longer yume nikki server)
-  // 'BeyT45e': { type: ['NSFW'], notes: 'May have NSFW content.', warn: 1 }, //Foodies server Yume Kinki (OFFICIAL LINK). No, just no.
-  // 'Hvty69K': { type: ['General'], notes: 'YNFG youtuber FukoSan' }, // taken down by request 
 }
 
 const categories = { General: [], Dev: [], NSFW: [] }
 
 let serversLoaded = 0
+
 
 // loadServer(id)
 // Takes in an server invite code, and sends a request for information.
@@ -57,7 +53,11 @@ if (Number(localStorage.expiry) !== Math.floor(Date.now() / 1000000)) {
   localStorage.expiry = Math.floor(Date.now() / 1000000)
 }
 
-function loadServer (id) {
+function sleep(ms) {
+  return new Promise(resolveFunc => setTimeout(resolveFunc, ms));
+}
+
+async function loadServer (id) {
   const req = new XMLHttpRequest()
   const cache = localStorage[id]
   if (cache) {
@@ -70,20 +70,25 @@ function loadServer (id) {
       localStorage[id] = this.responseText
       saveServer(this.responseText)
     } else if (this.readyState === 4 && this.status !== 200) {
-      const error = JSON.parse(this.responseText)
-      if (error.code === 10006) { // Unknown Invite
-        delete servers[id]
-        console.log(
-          'Invite: ' + id + ', is incorrect or expired!\n' +
-      'Please update or remove this invite!\n\n'
-        )
-      } else if (error.retry_after) { // Rate limited
-        setTimeout(
-          loadServer,
-          JSON.parse(this.responseText).retry_after,
-          id
-        )
-        document.getElementById('loadtxt').textContent = 'Please wait...'
+      try{
+        const error = JSON.parse(this.responseText)
+
+        if (error.code === 10006) { // Unknown Invite
+          delete servers[id]
+          console.log(
+            'Invite: ' + id + ', is incorrect or expired!\n' +
+        'Please update or remove this invite!\n\n'
+          )
+        } else if (error.retry_after) { // Rate limited
+          setTimeout(
+            loadServer,
+            JSON.parse(this.responseText).retry_after,
+            id
+          )
+          document.getElementById('loadtxt').textContent = 'Please wait...'
+        }
+      } catch(err) {
+        console.log('API response possibly empty!\nError: ' + err)
       }
     }
   }
@@ -91,6 +96,7 @@ function loadServer (id) {
     // "https://jsonp.afeld.me/?url="+
     'https://discord.com/api/v6/invites/' + id + '?with_counts=true', true
   )
+  await sleep(2000)
   req.send(null)
 }
 
