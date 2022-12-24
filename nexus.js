@@ -1,6 +1,7 @@
 const servers = {
   'cERWpJ6Xbd': { type: ['General'], notes: '' }, // yume nikki battle royale
   '2UmCeFsGvd': { type: ['Dev'], notes: "YNOProject's exclusive fangame development server." }, // yume nikki battle royale #2
+  'jBFXzGARCT': { type: ['General'], notes: 'The Official Chapel of the Monochrome Sisters.' }, // hujle's mental asylum, monoe
   'JzuTbJe': { type: ['General'], notes: '', warn: 1 }, // Uboachan
   'Rv5P4KR': { type: ['General'], notes: '', warn: 1 }, // Yume Nikki Fan Discord (cool logo)
   'AE6NVrj': { type: ['General'], notes: '' }, // Yume Nikki (two rainbows server)
@@ -29,6 +30,7 @@ const servers = {
   'aQPeUSB': { type: ['Dev'], notes: 'Dream Diary Development chat, the ' + 'chat for making Yume Nikki fangames, ' +'general games, and hanging out!' }, // Dream Diary Development
   'DyWQQxN': { type: ['Dev'], notes: 'A server dedicated to the Dream Diary Jam 3.' }, // Dream Diary Jam 3
   'vzXT9ds': { type: ['Dev'], notes: 'A server dedicated to the Dream Diary Jam 4.' }, // Dream Diary Jam 4
+  // 'R7yK9V3tp3': { type: ['Dev'], notes: 'A server dedicated to the annual Dream Diary Jam.' }, // Dream Diary Jam 6
   'uajshx6fMJ': { type: ['Dev'], notes: 'Note Dream development server.' }, // Note Dream
   'vngGwD6': { type: ['Dev'], notes: 'Uneven Dream development server.' }, // Uneven Dream
   'KjtGdWY': { type: ['General'], notes: 'A server dedicated to Yume Nikki Speedrunning.' }, // Speedrunning in the 90s
@@ -37,6 +39,9 @@ const servers = {
   'AQMVFDh': { type: ['LSD: Dream Emulator'], notes: '' }, // DreamEmulator
   'sDfZX5f': { type: ['LSD: Dream Emulator'], notes: '' }, // Emulated Dreams
   '3SBFGGJ': { type: ['LSD: Dream Emulator'], notes: '' } // LSD: Dream Emulator Community
+  // 'tGCZtRj': { type: ['General'], notes: '', warn: 1 }, // masada spaceship (no longer yume nikki server)
+  // 'BeyT45e': { type: ['NSFW'], notes: 'May have NSFW content.', warn: 1 }, //Foodies server Yume Kinki (OFFICIAL LINK). No, just no.
+  // 'Hvty69K': { type: ['General'], notes: 'YNFG youtuber FukoSan' }, // taken down by request 
 }
 
 const categories = { General: [], Dev: [], NSFW: [] }
