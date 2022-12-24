@@ -82,7 +82,7 @@ async function loadServer (id) {
         } else if (error.retry_after) { // Rate limited
           setTimeout(
             loadServer,
-            JSON.parse(this.responseText).retry_after,
+            JSON.parse(this.responseText).retry_after+-400,
             id
           )
           document.getElementById('loadtxt').textContent = 'Please wait...'
